@@ -16,39 +16,38 @@ def dist2(p1,p2):
 def closestPair(arr):
 	sortTime = time.clock()
 	arrx = sorted(arr, key=lambda x: x[0])
-	arry = sorted(arr, key=lambda x: x[1])
 	sortTime = time.clock() - sortTime
-	print "Sort:",sortTime
+	#print "Sort:",sortTime
 
-	dist = c(arrx,arry, 0, len(arrx) - 1)
-	print "Elevate:", dist[1]
-	return sqrt(dist[0])
+	dist = c(arrx, 0, len(arrx) - 1)
+	#print "Elevate:", dist[1]
+	return sqrt(dist)
 
-def elevate(arry, d, midXVale):
+def elevate(arry, d):
 	md = d
 	for i in range(len(arry)):
-		if(arry[i][0] >= (midXVale-d) and arry[i][0] <= (midXVale+d)):
-			maxy = arry[i][1] + d
-			for j in range(i+1, len(arry)):
-				if(arry[j][1] > maxy): break
-				md = min(md, dist2(arry[i], arry[j]))
+		maxy = arry[i][1] + md
+		for j in range(i+1, len(arry)):
+			if(arry[j][1] > maxy): break
+			md = min(md, dist2(arry[i], arry[j]))
+			maxy = arry[i][1] + md
 	return md
 
-def c(arrx, arry, start, end):
-	if(start == end): return (2000000000,0)
-	if(end-start == 1): return (dist2(arrx[start], arrx[end]),0)
+def c(arrx, start, end):
+	if(start == end): return 2000000000
+	if(end-start == 1): return dist2(arrx[start], arrx[end])
 
 	mid = (start + end)//2
 
-	m1 = c(arrx,arry, start, mid)
-	m2 = c(arrx,arry, mid+1, end)
+	m1 = c(arrx, start, mid-1)
+	m2 = c(arrx, mid+1, end)
 
-	d = min(m1[0],m2[0])
-	elevateTime = time.clock()
-	d = min(d, elevate(arry,d, arrx[mid][0]))
-	elevateTime = time.clock() - elevateTime
+	arry = sorted(arrx[start:end+1], key = lambda x: x[1])
 
-	return (d,elevateTime + m1[1] + m2[1])
+	d = min(m1,m2)
+	d = min(d, elevate(arry,d))
+
+	return d
 
 def brute(arr):
 	md = 2000000000
@@ -61,8 +60,11 @@ def brute(arr):
 	return (sqrt(md), p)
 
 import random, time
+g = []
+b = []
+n = 1000
 for i in range(5):
-	points = set([(random.randint(0,100000), random.randint(0,100000)) for i in range(100)])
+	points = set([(random.randint(0,100000)/10.0, random.randint(0,100000)/10.0) for i in range(n)])
 	points = list(points)
 	goodTime = time.clock()
 	goodAlgo = closestPair(points)
@@ -71,5 +73,9 @@ for i in range(5):
 	badAlgo = brute(points)
 	badTime = time.clock() - badTime
 
-	print goodTime, badTime
+	g.append(goodTime)
+	b.append(badTime)
+print "N =", n
+print "D&C:", sum(g)/float(len(g))
+print "Brute:", sum(b)/float(len(b))
 

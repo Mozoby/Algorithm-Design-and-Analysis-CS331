@@ -14,10 +14,15 @@
 using namespace std;
 
 typedef pair<float, float> ff;
+typedef pair<int, ff > iff;
 typedef vector<ff > vff;
+typedef vector<iff > viff;
 
 #define TRvff(it, v) \
 	for(vff::iterator it = v.begin(); it != v.end(); ++it)
+
+#define TRviff(it, v) \
+	for(viff::iterator it = v.begin(); it != v.end(); ++it)
 
 #define INF 2000000000;
 

@@ -14,11 +14,17 @@ def ltile(k, exclude):
 	print colors
 	return ltileRecurse(k, exclude, [0,0], 2**k, colors)
 
+
+def printArr(tp):
+	for row in tp:
+		print ' '.join(map(str, row))
+
 def ltileRecurse(k, exclude, bl, size, colors):
+	#print size
 	if size == 2:
 		color = colors.pop()
-		print color
-		return [ [color if (exclude[0] - bl[0] != i or exclude[1] - bl[1] != j) else None for j in range(2) ] for i in range(2)]
+		#print color
+		return [ [color if (exclude[0] - bl[0] != j or exclude[1] - bl[1] != i) else None for j in range(2) ] for i in range(2)]
 	else:
 		tState = []
 		#gather sub states
@@ -27,7 +33,8 @@ def ltileRecurse(k, exclude, bl, size, colors):
 				nBl = (bl[0] + (dx*size//2), bl[1] + (dy*size//2))
 				tExclude = exclude
 				#Define the empty node
-				if(exclude[0] - nBl[0] < size//2 and exclude[1] - nBl[1] < size//2):
+				if( 0 < exclude[0] - nBl[0] < size//2 and  0 < exclude[1] - nBl[1] < size//2):
+					print "don't change"
 					tExclude = exclude #don't change it
 				else:
 					#change excluded to the inner
@@ -40,29 +47,41 @@ def ltileRecurse(k, exclude, bl, size, colors):
 						tExclude[1] = nBl[1] + (size//2) - 1
 					else:
 						tExclude[1] = nBl[1]
-				print "recurse", dx, dy
-				tState.append(ltileRecurse(k, tExclude, nBl, size//2, colors))
+				#print "recurse", dx, dy
+				#print tExclude, nBl
+				subArr = ltileRecurse(k, tExclude, nBl, size//2, colors)
+				printArr(subArr)
+				tState.append(subArr)
 
 		#Construct This 2D Array from subArrays
 		arr = [[None] * size]*size
+		printArr(arr)
+		#tState.reverse()
 		for index, subArr in enumerate(tState):
-			tBl = (index % 2, index//2)
+			tBl = ((index % 2) * size//2, (index//2) *size//2 )
+			#print tBl
 			for y,row in enumerate(subArr):
 				for x, value in enumerate(row):
+					#print "(",tBl[1] + y, tBl[0] + x,")", value
 					arr[tBl[1] + y][tBl[0] + x] = value
-
+		printArr(arr)
 		#Fill in the missing pieces
 		tColor = colors.pop()
-		print tColor
+		#print tColor
 		for y, row in enumerate(arr):
 			for x, value in enumerate(row):
-				if(value is None and ((exclude[0] - bl[0]) == x or (exclude[1] - bl[1]) == y)):
-						#fill with color
-						arr[y][x] = tColor
+				if(value is None and ((exclude[0] - bl[0]) == x and (exclude[1] - bl[1]) == y)):
+					#fill with color
+					arr[y][x] = tColor
+				else:
+					arr[y][x] = value
 
 		return arr
 
-print ltile(4, [15,15])
+tp = ltile(3, [7,7])
+printArr(tp)
+#tp.reverse()
+
 
 
 

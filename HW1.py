@@ -1,8 +1,10 @@
-# CS331 HW Exercise 3
-# Concept: After one quicksort partition you know that the pivot is in the correct place
-# 	Looking at the pivot element's new index you can determine the position of proper element k
-#	If the pivot is at an index less than k, then you know k is definitely to its right and vice versa
-#	So you increment the next pivot value to one in the direction of k, and re-run the partition, repeat
+"""
+CS331 HW Exercise 3
+Concept: After one quicksort partition you know that the pivot is in the correct place
+	Looking at the pivot element's new index you can determine the position of proper element k
+	If the pivot is at an index less than k, then you know k is definitely to its right and vice versa
+	So you increment the next pivot value to one in the direction of k, and re-run the partition, repeat
+"""
 
 import random
 

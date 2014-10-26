@@ -8,14 +8,11 @@ Author: Bryan Thornbury
 def memoize(f):
 	recorded = dict()
 	def call(*args, **kwargs):
-		if('clear' in kwargs and kwargs['clear']): 
-			recorded.clear()
+		if('clear' in kwargs and kwargs['clear']): recorded.clear()
 
-		if(args[1:] in recorded):
-			return recorded[args[1:]]
-		else:
-			recorded[args[1:]] = f(*args)
-			return recorded[args[1:]]
+		if(not args[1:] in recorded): recorded[args[1:]] = f(*args)
+		
+		return recorded[args[1:]]
 	return call
 
 def computeAverageProb(node, depth = 1):
@@ -39,17 +36,14 @@ def optimalBinaryTree(arr,lb, rb):
 		if(candidateCost < minCost):
 			minTree = (arr[root],left,right)
 			minCost = candidateCost
-
 	return minTree
 
 def stringifyTree(node):
 	if(node is None): return ""
 
-	left = stringifyTree(node[1])
-	right = stringifyTree(node[2])
-
-	if(len(left) == 0 and len(right) == 0): return node[0][0]
-	return node[0][0] + '(' + left + ',' + right + ')'
+	if(node[1] is None and node[2] is None): return node[0][0]
+	
+	return node[0][0] + '(' + stringifyTree(node[1]) + ',' + stringifyTree(node[2]) + ')'
 
 
 tests = [[('Don', 3/8.0), ('Isabelle', 3/8.0), ('Ralph', 1/8.0), ('Wally', 1/8.0)],

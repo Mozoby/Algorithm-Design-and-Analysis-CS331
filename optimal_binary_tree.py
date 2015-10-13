@@ -1,6 +1,4 @@
-
-print '''
-CS 331 Project 1
+'''
 Optimal Binary Tree Implementation
 Author: Bryan Thornbury
 '''

@@ -1,6 +1,5 @@
 """
 Closest Pair Divide and Conquer Algorithm
-From 10/10/2014 Class Discussion
 
 Author: Bryan Thornbury
 """

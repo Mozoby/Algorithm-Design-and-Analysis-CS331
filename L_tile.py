@@ -1,6 +1,6 @@
 """
 L-Tile implementation across a 2D grid of size 2^k by 2^k.
-From CS331 Class Discussion from 10/10/2014
+
 Author: Bryan Thornbury
 """
 

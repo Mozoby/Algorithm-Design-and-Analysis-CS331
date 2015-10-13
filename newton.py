@@ -1,6 +1,5 @@
 """
 Newton's method of successive root approximation.
-Made for HW #1 due 10/15/2014
 """
 
 def isFunction(*functions):

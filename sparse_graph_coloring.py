@@ -1,8 +1,7 @@
 import random 
 import math
 
-print '''
-CS 331 Project 2
+'''
 Greedy and Backtracking Coloring of Sparse Graphs
 Author: Bryan Thornbury
 '''
@@ -115,8 +114,8 @@ def backtrack_recurse(graph, colors, current, color_count):
 
 	return (nodeCount, False)
 
-def step2():
-	print "Step 2: Greedy Method"
+def execute_greedy():
+	print "Greedy Method"
 	print "Order\tColors"
 	m = lambda x: int(5 * x * math.log(x,10))
 
@@ -142,8 +141,8 @@ def step2():
 
 	print ""
 
-def step3():
-	print "Step 3: Backtracking Method"
+def execute_backtracking():
+	print "Backtracking Method"
 	print "Order\tNodes"
 	m = lambda x: int(5 * x * math.log(x,10))
 
@@ -160,8 +159,9 @@ def step3():
 
 	print ""
 
-step2()
-step3()
+if __name__ == "__main__":
+	execute_greedy()
+	execute_backtracking()
 
 
 
